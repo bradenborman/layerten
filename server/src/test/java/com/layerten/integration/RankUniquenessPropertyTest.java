@@ -1,5 +1,7 @@
-package com.layerten.entity;
+package com.layerten.integration;
 
+import com.layerten.entity.RankedEntry;
+import com.layerten.entity.RankedList;
 import com.layerten.repository.RankedEntryRepository;
 import com.layerten.repository.RankedListRepository;
 import org.junit.jupiter.api.Test;

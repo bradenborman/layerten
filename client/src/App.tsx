@@ -1,20 +1,37 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import HomePage from './pages/HomePage'
+import ListsIndexPage from './pages/ListsIndexPage'
+import ListDetailPage from './pages/ListDetailPage'
+import PostsIndexPage from './pages/PostsIndexPage'
+import PostDetailPage from './pages/PostDetailPage'
+import SuggestPage from './pages/SuggestPage'
+import AdminLoginPage from './pages/AdminLoginPage'
+import AdminDashboardPage from './pages/AdminDashboardPage'
+import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
   return (
     <Router>
       <div className="min-h-screen bg-gray-50">
         <Routes>
-          <Route path="/" element={
-            <div className="container mx-auto px-4 py-8">
-              <h1 className="text-4xl font-bold text-primary-600">
-                Welcome to LayerTen
-              </h1>
-              <p className="mt-4 text-gray-600">
-                Countdown lists and blog posts coming soon!
-              </p>
-            </div>
-          } />
+          {/* Public routes */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/lists" element={<ListsIndexPage />} />
+          <Route path="/lists/:slug" element={<ListDetailPage />} />
+          <Route path="/posts" element={<PostsIndexPage />} />
+          <Route path="/posts/:slug" element={<PostDetailPage />} />
+          <Route path="/suggest" element={<SuggestPage />} />
+          
+          {/* Admin routes */}
+          <Route path="/admin/login" element={<AdminLoginPage />} />
+          <Route 
+            path="/admin/dashboard" 
+            element={
+              <ProtectedRoute>
+                <AdminDashboardPage />
+              </ProtectedRoute>
+            } 
+          />
         </Routes>
       </div>
     </Router>

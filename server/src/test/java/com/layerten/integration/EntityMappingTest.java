@@ -1,5 +1,6 @@
-package com.layerten.entity;
+package com.layerten.integration;
 
+import com.layerten.entity.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;

@@ -11,4 +11,4 @@ cmds = [
 ]
 
 [start]
-cmd = "java -Dserver.port=$PORT -jar server/build/libs/*.jar"
+cmd = "java -Dserver.port=$PORT -Dspring.profiles.active=railway -jar server/build/libs/*.jar"

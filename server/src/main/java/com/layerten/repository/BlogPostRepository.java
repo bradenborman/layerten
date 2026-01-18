@@ -95,4 +95,53 @@ public interface BlogPostRepository extends JpaRepository<BlogPost, Long> {
      * @return true if the slug exists, false otherwise
      */
     boolean existsBySlug(String slug);
+    
+    /**
+     * Search blog posts by title or excerpt (case-insensitive) without status filter.
+     * Used for admin queries.
+     * 
+     * @param search the search term
+     * @param pageable pagination information
+     * @return a page of matching blog posts
+     */
+    @Query("SELECT bp FROM BlogPost bp WHERE " +
+           "LOWER(bp.title) LIKE LOWER(CONCAT('%', :search, '%')) " +
+           "OR LOWER(bp.excerpt) LIKE LOWER(CONCAT('%', :search, '%'))")
+    Page<BlogPost> findByTitleOrExcerptContaining(
+        @Param("search") String search,
+        Pageable pageable
+    );
+    
+    /**
+     * Find blog posts by tag name without status filter.
+     * Used for admin queries.
+     * 
+     * @param tagName the tag name to filter by
+     * @param pageable pagination information
+     * @return a page of blog posts with the specified tag
+     */
+    @Query("SELECT DISTINCT bp FROM BlogPost bp JOIN bp.tags t WHERE t.name = :tagName")
+    Page<BlogPost> findByTagName(
+        @Param("tagName") String tagName,
+        Pageable pageable
+    );
+    
+    /**
+     * Search blog posts by tag name and title/excerpt without status filter.
+     * Used for admin queries.
+     * 
+     * @param tagName the tag name to filter by
+     * @param search the search term
+     * @param pageable pagination information
+     * @return a page of matching blog posts
+     */
+    @Query("SELECT DISTINCT bp FROM BlogPost bp JOIN bp.tags t " +
+           "WHERE t.name = :tagName " +
+           "AND (LOWER(bp.title) LIKE LOWER(CONCAT('%', :search, '%')) " +
+           "OR LOWER(bp.excerpt) LIKE LOWER(CONCAT('%', :search, '%')))")
+    Page<BlogPost> findByTagNameAndTitleOrExcerptContaining(
+        @Param("tagName") String tagName,
+        @Param("search") String search,
+        Pageable pageable
+    );
 }
