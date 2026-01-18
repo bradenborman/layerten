@@ -18,19 +18,27 @@ spring:
     driver-class-name: org.postgresql.Driver
     
   jpa:
-    show-sql: true  # Show SQL queries in console for debugging
+    show-sql: false  # Disable SQL logging in production
     properties:
       hibernate:
-        format_sql: true  # Format SQL for readability
+        format_sql: false
 
 # Application-specific configuration
 layerten:
   media:
-    root: ./local-media  # Store media files locally during development
+    root: ${MEDIA_ROOT:/app/media}
+    max-file-size: 10MB
+    allowed-types: image/jpeg,image/png,image/gif,image/webp
   admin:
     username: ${ADMIN_USERNAME:admin}
     password: ${ADMIN_PASSWORD:admin}
 
 # Server configuration
 server:
-  port: 8080
+  port: ${PORT:8080}
+
+# Logging configuration
+logging:
+  level:
+    com.layerten: INFO
+    org.springframework: WARN
