@@ -409,7 +409,7 @@ This implementation plan breaks down the LayerTen monorepo web application into 
     - **Property 45: Markdown rendering**
     - **Validates: Requirements 10.6**
 
-- [ ] 19. Implement public pages - Home and Lists
+- [x] 19. Implement public pages - Home and Lists
   - [x] 19.1 Create HomePage component
     - Fetch and display featured lists (3 most recent)
     - Fetch and display latest blog posts (3 most recent)
@@ -417,14 +417,14 @@ This implementation plan breaks down the LayerTen monorepo web application into 
     - Add search bar
     - _Requirements: 10.1_
   
-  - [ ] 19.2 Create ListsIndexPage component
+  - [x] 19.2 Create ListsIndexPage component
     - Fetch paginated lists with search and tag filters
     - Display list cards with title, subtitle, cover image, tags
     - Add search input and tag filter dropdowns
     - Integrate Pagination component
     - _Requirements: 10.2_
   
-  - [ ] 19.3 Create ListDetailPage component
+  - [x] 19.3 Create ListDetailPage component
     - Fetch list with entries by slug
     - Implement reveal mode state management
     - Implement show-all mode toggle
