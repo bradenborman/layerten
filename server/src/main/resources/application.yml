@@ -3,12 +3,11 @@ spring:
     name: layerten-server
   
   datasource:
-    # Railway provides DATABASE_URL in format: postgresql://user:pass@host:port/db
-    # Spring Boot needs: jdbc:postgresql://host:port/db with separate user/pass
-    # This configuration supports both Railway (DATABASE_URL) and local (DB_* vars)
-    url: ${DATABASE_URL:jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:layerten}}
-    username: ${DB_USER:layerten}
-    password: ${DB_PASSWORD:layerten}
+    # Railway provides PGHOST, PGPORT, PGDATABASE, PGUSER, PGPASSWORD
+    # Fall back to localhost for local development
+    url: jdbc:postgresql://${PGHOST:${DB_HOST:localhost}}:${PGPORT:${DB_PORT:5432}}/${PGDATABASE:${DB_NAME:layerten}}
+    username: ${PGUSER:${DB_USER:layerten}}
+    password: ${PGPASSWORD:${DB_PASSWORD:layerten}}
     driver-class-name: org.postgresql.Driver
   
   jpa:
