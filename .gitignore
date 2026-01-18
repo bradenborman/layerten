@@ -24,6 +24,9 @@ Thumbs.db
 .env.local
 .env.*.local
 
+# Gradle properties (environment-specific)
+gradle.properties
+
 # Spring Boot profile files with credentials
 server/src/main/resources/application-local.yml
 

@@ -1,0 +1,46 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.github.node-gradle:gradle-node-plugin:7.0.2"
+    }
+}
+
+apply plugin: 'com.github.node-gradle.node'
+
+node {
+    version = '20.5.1'
+    pnpmVersion = '8.15.0'
+    download = true
+    workDir = file("${project.projectDir}/.gradle/nodejs")
+    pnpmWorkDir = file("${project.projectDir}/.gradle/pnpm")
+    nodeProjectDir = file("${project.projectDir}")
+}
+
+task clientClean(type: Delete) {
+    delete "node_modules"
+    delete "dist"
+}
+
+task clientInstall(type: com.github.gradle.node.pnpm.task.PnpmTask) {
+    inputs.file(file("${project.projectDir}/package.json"))
+    outputs.dir(file("${project.projectDir}/node_modules"))
+    
+    args = ['install']
+    
+    onlyIf {
+        !file("${project.projectDir}/node_modules").exists()
+    }
+}
+
+task clientBuild(type: com.github.gradle.node.pnpm.task.PnpmTask, dependsOn: clientInstall) {
+    inputs.dir(file("${project.projectDir}/src"))
+    inputs.file(file("${project.projectDir}/package.json"))
+    inputs.file(file("${project.projectDir}/vite.config.ts"))
+    outputs.dir(file("${project.projectDir}/dist"))
+    
+    args = ['run', 'build']
+}
