@@ -1,5 +1,6 @@
 import { useSearchParams } from 'react-router-dom'
 import AdminLayout from '../components/AdminLayout'
+import AdminListsTab from '../components/AdminListsTab'
 
 export default function AdminDashboardPage() {
   const [searchParams] = useSearchParams()
@@ -7,12 +8,7 @@ export default function AdminDashboardPage() {
 
   return (
     <AdminLayout>
-      {currentTab === 'lists' && (
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Ranked Lists</h2>
-          <p className="text-gray-600">Lists management coming soon</p>
-        </div>
-      )}
+      {currentTab === 'lists' && <AdminListsTab />}
       
       {currentTab === 'posts' && (
         <div>
