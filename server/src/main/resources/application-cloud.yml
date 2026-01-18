@@ -39,8 +39,6 @@ spring:
 layerten:
   media:
     root: ${MEDIA_ROOT:/app/media}  # Default to /app/media in Railway
-    max-file-size: 10MB
-    allowed-types: image/jpeg,image/png,image/gif,image/webp
   admin:
     username: ${ADMIN_USERNAME}
     password: ${ADMIN_PASSWORD}
