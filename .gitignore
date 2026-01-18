@@ -1,43 +1,30 @@
-HELP.md
-.gradle
-build/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
+# OS Files
+.DS_Store
+Thumbs.db
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
-
-### IntelliJ IDEA ###
-.idea
-*.iws
+# IDE
+.idea/
+.vscode/
 *.iml
 *.ipr
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
+*.iws
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+# Environment files with credentials
+.env
+.env.local
+.env.*.local
 
-### VS Code ###
-.vscode/
+# Spring Boot profile files with credentials
+server/src/main/resources/application-local.yml
 
-### Spring Boot Profile Files with Credentials ###
-application-local.yml
-
-### Local media storage ###
+# Local media storage
 local-media/
+server/local-media/
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp

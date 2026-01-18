@@ -1,0 +1,14 @@
+[phases.setup]
+nixPkgs = ["jdk21", "nodejs_20"]
+
+[phases.build]
+cmds = [
+  "chmod +x gradlew",
+  "cd client && npm install && npm run build && cd ..",
+  "mkdir -p server/src/main/resources/static",
+  "cp -r client/dist/* server/src/main/resources/static/",
+  "./gradlew :server:clean :server:build -x test --no-daemon"
+]
+
+[start]
+cmd = "java -Dserver.port=$PORT -jar server/build/libs/*.jar"
