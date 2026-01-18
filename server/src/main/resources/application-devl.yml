@@ -2,23 +2,21 @@
 # This profile connects to Railway devl database using environment variables
 # Safe to commit to git - no credentials hardcoded
 # 
-# To use this profile, run: ./gradlew bootRun --args='--spring.profiles.active=devl'
-# Or set environment variable: SPRING_PROFILES_ACTIVE=devl
-#
-# Set these environment variables before running:
-# - PGHOST, PGPORT, PGDATABASE, PGUSER, PGPASSWORD (from Railway)
-# Or use DATABASE_PUBLIC_URL
+# Required environment variables (provided by Railway):
+# - PGHOST, PGPORT, PGDATABASE, PGUSER, PGPASSWORD
+# - ADMIN_USERNAME, ADMIN_PASSWORD
+# - MEDIA_ROOT (optional, defaults to /app/media)
+# - PORT (provided by Railway)
 
 spring:
   datasource:
-    # Uses environment variables from Railway
-    url: jdbc:postgresql://${PGHOST:localhost}:${PGPORT:5432}/${PGDATABASE:railway}
-    username: ${PGUSER:postgres}
+    url: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
+    username: ${PGUSER}
     password: ${PGPASSWORD}
     driver-class-name: org.postgresql.Driver
     
   jpa:
-    show-sql: false  # Disable SQL logging in production
+    show-sql: false
     properties:
       hibernate:
         format_sql: false
@@ -30,8 +28,8 @@ layerten:
     max-file-size: 10MB
     allowed-types: image/jpeg,image/png,image/gif,image/webp
   admin:
-    username: ${ADMIN_USERNAME:admin}
-    password: ${ADMIN_PASSWORD:admin}
+    username: ${ADMIN_USERNAME}
+    password: ${ADMIN_PASSWORD}
 
 # Server configuration
 server:
