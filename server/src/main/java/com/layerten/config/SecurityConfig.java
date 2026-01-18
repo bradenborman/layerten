@@ -54,8 +54,10 @@ public class SecurityConfig {
                 .requestMatchers("/api/**").permitAll()
                 // Allow public access to media files
                 .requestMatchers("/media/**").permitAll()
-                // Deny all other requests by default
-                .anyRequest().denyAll()
+                // Allow public access to static resources and frontend
+                .requestMatchers("/", "/assets/**", "/index.html").permitAll()
+                // Allow public access to all frontend routes (for React Router)
+                .anyRequest().permitAll()
             )
             .httpBasic(basic -> {}) // Enable HTTP Basic authentication
             .sessionManagement(session -> 

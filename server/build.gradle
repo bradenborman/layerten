@@ -50,6 +50,30 @@ tasks.named('test') {
     exclude '**/integration/**'
 }
 
+// Task to build the client
+task clientBuild(type: Exec) {
+    workingDir '../client'
+    
+    if (System.getProperty('os.name').toLowerCase().contains('windows')) {
+        commandLine 'cmd', '/c', 'npm install && npm run build'
+    } else {
+        commandLine 'sh', '-c', 'npm install && npm run build'
+    }
+}
+
+// Task to copy client build to server resources
+task copyClient(type: Copy, dependsOn: clientBuild) {
+    doFirst {
+        delete "src/main/resources/static"
+    }
+    
+    from '../client/dist'
+    into 'src/main/resources/static'
+}
+
+// Make processResources depend on copyClient
+processResources.dependsOn(copyClient)
+
 // Disable the plain JAR, only create the Spring Boot executable JAR
 jar {
     enabled = false

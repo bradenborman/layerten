@@ -1,6 +1,18 @@
 import api from './api'
-import type { RankedListDetail, RankedEntry, MediaAsset, Suggestion } from './lists'
+import type { RankedListDetail, RankedEntry, MediaAsset } from './lists'
 import type { BlogPostDetail } from './posts'
+
+export interface Suggestion {
+  id: number
+  title: string
+  description: string
+  category?: string
+  exampleEntries?: string
+  submitterName?: string
+  submitterEmail?: string
+  status: 'NEW' | 'REVIEWING' | 'ACCEPTED' | 'DECLINED'
+  createdAt: string
+}
 
 export interface CreateListRequest {
   title: string
