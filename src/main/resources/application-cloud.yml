@@ -1,0 +1,48 @@
+# Cloud/Railway Environment Configuration
+# This profile uses environment variables provided by Railway
+# Safe to commit to git - no credentials hardcoded
+# 
+# Railway automatically provides these environment variables:
+# - PGHOST, PGPORT, PGDATABASE, PGUSER, PGPASSWORD
+# - DATABASE_URL (full connection string)
+# 
+# You need to set these in Railway dashboard:
+# - ADMIN_USERNAME
+# - ADMIN_PASSWORD
+# - MEDIA_ROOT (optional, defaults to /app/media)
+#
+# Railway will automatically use this profile when SPRING_PROFILES_ACTIVE=cloud
+# Or it will be used when deployed to Railway if set as default
+
+spring:
+  datasource:
+    # Railway provides DATABASE_URL in format: postgresql://user:pass@host:port/db
+    # Spring Boot needs: jdbc:postgresql://host:port/db
+    # We'll use individual variables for clarity
+    url: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
+    username: ${PGUSER}
+    password: ${PGPASSWORD}
+    driver-class-name: org.postgresql.Driver
+    
+  jpa:
+    show-sql: false  # Disable SQL logging in production
+    properties:
+      hibernate:
+        format_sql: false
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+
+# Application-specific configuration
+layerten:
+  media:
+    root: ${MEDIA_ROOT:/app/media}  # Default to /app/media in Railway
+  admin:
+    username: ${ADMIN_USERNAME}
+    password: ${ADMIN_PASSWORD}
+
+# Server configuration
+server:
+  port: ${PORT:8080}  # Railway provides PORT variable

@@ -38,7 +38,6 @@ out/
 
 ### Spring Boot Profile Files with Credentials ###
 application-local.yml
-application-dev.yml
 
 ### Local media storage ###
 local-media/
