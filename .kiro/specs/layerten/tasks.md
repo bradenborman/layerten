@@ -442,21 +442,21 @@ This implementation plan breaks down the LayerTen monorepo web application into 
     - **Property 44: Reveal mode progress tracking**
     - **Validates: Requirements 2.5**
 
-- [ ] 20. Implement public pages - Posts and Suggestions
-  - [ ] 20.1 Create PostsIndexPage component
+- [x] 20. Implement public pages - Posts and Suggestions
+  - [x] 20.1 Create PostsIndexPage component
     - Fetch paginated posts with search and tag filters
     - Display post cards with title, excerpt, cover image, publication date
     - Add search input and tag filter dropdowns
     - Integrate Pagination component
     - _Requirements: 10.5_
   
-  - [ ] 20.2 Create PostDetailPage component
+  - [x] 20.2 Create PostDetailPage component
     - Fetch post by slug
     - Display cover image, title, publication date, tags
     - Render markdown body with MarkdownRenderer
     - _Requirements: 10.6_
   
-  - [ ] 20.3 Create SuggestListPage component
+  - [x] 20.3 Create SuggestListPage component
     - Form with fields: title, description, category, example entries, name, email
     - Client-side validation
     - Submit to POST /api/suggestions
