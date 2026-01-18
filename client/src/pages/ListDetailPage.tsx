@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, useLocation, useNavigate } from 'react-router-dom'
-import { listsApi, type RankedListDetail, type RankedEntry } from '../services/lists'
+import { listsApi, type RankedListDetail } from '../services/lists'
 import TagBadge from '../components/TagBadge'
 import MarkdownRenderer from '../components/MarkdownRenderer'
 
