@@ -490,7 +490,7 @@ This implementation plan breaks down the LayerTen monorepo web application into 
     - _Requirements: 6.2, 6.6_
 
 - [ ] 22. Implement admin dashboard - Lists management
-  - [ ] 22.1 Create AdminLayout component
+  - [x] 22.1 Create AdminLayout component
     - Navigation tabs: Lists, Posts, Suggestions, Media
     - Logout button
     - _Requirements: 11.1_
