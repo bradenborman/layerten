@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { adminApi } from '../services/admin'
 import type { MediaAsset } from '../services/lists'
 import ImageUploader from './ImageUploader'
+import LoadingSpinner from './LoadingSpinner'
 
 export default function AdminMediaTab() {
   const [media, setMedia] = useState<MediaAsset[]>([])
@@ -62,7 +63,7 @@ export default function AdminMediaTab() {
   }
 
   if (loading) {
-    return <div className="text-center py-8">Loading...</div>
+    return <LoadingSpinner size="lg" className="py-8" />
   }
 
   if (error) {

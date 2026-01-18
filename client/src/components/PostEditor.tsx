@@ -4,6 +4,7 @@ import type { Tag, MediaAsset } from '../services/lists'
 import type { BlogPostDetail } from '../services/posts'
 import type { CreatePostRequest, UpdatePostRequest } from '../services/admin'
 import MarkdownRenderer from './MarkdownRenderer'
+import LoadingSpinner from './LoadingSpinner'
 
 interface PostEditorProps {
   postId?: number
@@ -145,7 +146,7 @@ export default function PostEditor({ postId, onSave, onCancel }: PostEditorProps
   }
 
   if (loading) {
-    return <div className="text-center py-8">Loading...</div>
+    return <LoadingSpinner size="lg" className="py-8" />
   }
 
   return (

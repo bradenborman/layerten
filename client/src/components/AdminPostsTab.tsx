@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import api from '../services/api'
 import type { BlogPostSummary } from '../services/posts'
 import PostEditor from './PostEditor'
+import LoadingSpinner from './LoadingSpinner'
 
 export default function AdminPostsTab() {
   const [posts, setPosts] = useState<BlogPostSummary[]>([])
@@ -77,7 +78,7 @@ export default function AdminPostsTab() {
   }
 
   if (loading) {
-    return <div className="text-center py-8">Loading...</div>
+    return <LoadingSpinner size="lg" className="py-8" />
   }
 
   if (error) {

@@ -3,6 +3,7 @@ import { adminApi } from '../services/admin'
 import type { RankedEntry, Tag, MediaAsset } from '../services/lists'
 import type { CreateListRequest, UpdateListRequest, CreateEntryRequest, EntryRankUpdate } from '../services/admin'
 import EntryEditor from './EntryEditor'
+import LoadingSpinner from './LoadingSpinner'
 
 interface ListEditorProps {
   listId?: number
@@ -261,7 +262,7 @@ export default function ListEditor({ listId, onSave, onCancel }: ListEditorProps
   }
 
   if (loading) {
-    return <div className="text-center py-8">Loading...</div>
+    return <LoadingSpinner size="lg" className="py-8" />
   }
 
   return (

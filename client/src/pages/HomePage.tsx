@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { listsApi, type RankedListSummary, type Tag } from '../services/lists'
 import { postsApi, type BlogPostSummary } from '../services/posts'
 import TagBadge from '../components/TagBadge'
+import LoadingSpinner from '../components/LoadingSpinner'
 
 export default function HomePage() {
   const navigate = useNavigate()
@@ -54,9 +55,7 @@ export default function HomePage() {
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-center items-center min-h-[400px]">
-          <div className="text-gray-600">Loading...</div>
-        </div>
+        <LoadingSpinner size="lg" className="min-h-[400px]" />
       </div>
     )
   }

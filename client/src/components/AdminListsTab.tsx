@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import type { RankedListSummary } from '../services/lists'
 import ListEditor from './ListEditor'
+import LoadingSpinner from './LoadingSpinner'
 
 export default function AdminListsTab() {
   const { getAuthHeader } = useAuth()
@@ -82,7 +83,7 @@ export default function AdminListsTab() {
   }
 
   if (loading) {
-    return <div className="text-center py-8">Loading...</div>
+    return <LoadingSpinner size="lg" className="py-8" />
   }
 
   if (error) {

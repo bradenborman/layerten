@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { listsApi, type RankedListSummary } from '../services/lists'
 import Pagination from '../components/Pagination'
 import TagBadge from '../components/TagBadge'
+import LoadingSpinner from '../components/LoadingSpinner'
 
 export default function ListsIndexPage() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -66,9 +67,7 @@ export default function ListsIndexPage() {
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-center items-center min-h-[400px]">
-          <div className="text-gray-600">Loading...</div>
-        </div>
+        <LoadingSpinner size="lg" className="min-h-[400px]" />
       </div>
     )
   }

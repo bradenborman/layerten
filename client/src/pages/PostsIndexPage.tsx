@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { postsApi, type BlogPostSummary } from '../services/posts'
 import Pagination from '../components/Pagination'
 import TagBadge from '../components/TagBadge'
+import LoadingSpinner from '../components/LoadingSpinner'
 
 export default function PostsIndexPage() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -66,9 +67,7 @@ export default function PostsIndexPage() {
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-center items-center min-h-[400px]">
-          <div className="text-gray-600">Loading...</div>
-        </div>
+        <LoadingSpinner size="lg" className="min-h-[400px]" />
       </div>
     )
   }

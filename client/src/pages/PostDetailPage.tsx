@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { postsApi, type BlogPostDetail } from '../services/posts'
 import TagBadge from '../components/TagBadge'
 import MarkdownRenderer from '../components/MarkdownRenderer'
+import LoadingSpinner from '../components/LoadingSpinner'
 
 export default function PostDetailPage() {
   const { slug } = useParams<{ slug: string }>()
@@ -30,9 +31,7 @@ export default function PostDetailPage() {
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-center items-center min-h-[400px]">
-          <div className="text-gray-600">Loading...</div>
-        </div>
+        <LoadingSpinner size="lg" className="min-h-[400px]" />
       </div>
     )
   }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { adminApi } from '../services/admin'
 import type { Suggestion } from '../services/admin'
+import LoadingSpinner from './LoadingSpinner'
 
 type SuggestionStatus = 'NEW' | 'REVIEWING' | 'ACCEPTED' | 'DECLINED'
 
@@ -67,7 +68,7 @@ export default function AdminSuggestionsTab() {
   }
 
   if (loading) {
-    return <div className="text-center py-8">Loading...</div>
+    return <LoadingSpinner size="lg" className="py-8" />
   }
 
   if (error) {
