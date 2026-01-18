@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { adminApi } from '../services/admin'
 import type { RankedEntry, Tag, MediaAsset } from '../services/lists'
 import type { CreateListRequest, UpdateListRequest, CreateEntryRequest, EntryRankUpdate } from '../services/admin'
@@ -12,6 +13,7 @@ interface ListEditorProps {
 }
 
 export default function ListEditor({ listId, onSave, onCancel }: ListEditorProps) {
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [saving, setSaving] = useState(false)
   
@@ -358,7 +360,7 @@ export default function ListEditor({ listId, onSave, onCancel }: ListEditorProps
             </select>
             <button
               type="button"
-              onClick={() => window.open(`${window.location.origin}/admin/dashboard?tab=media`, '_blank')}
+              onClick={() => navigate('/admin/dashboard?tab=media')}
               className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 whitespace-nowrap"
             >
               Upload New

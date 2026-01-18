@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { adminApi } from '../services/admin'
 import type { Tag, MediaAsset } from '../services/lists'
 import type { BlogPostDetail } from '../services/posts'
@@ -13,6 +14,7 @@ interface PostEditorProps {
 }
 
 export default function PostEditor({ postId, onSave, onCancel }: PostEditorProps) {
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [saving, setSaving] = useState(false)
   const [showPreview, setShowPreview] = useState(false)
@@ -214,7 +216,7 @@ export default function PostEditor({ postId, onSave, onCancel }: PostEditorProps
             </select>
             <button
               type="button"
-              onClick={() => window.open(`${window.location.origin}/admin/dashboard?tab=media`, '_blank')}
+              onClick={() => navigate('/admin/dashboard?tab=media')}
               className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 whitespace-nowrap"
             >
               Upload New

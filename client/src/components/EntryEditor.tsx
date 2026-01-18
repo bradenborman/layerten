@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import type { RankedEntry, MediaAsset } from '../services/lists'
 import type { CreateEntryRequest } from '../services/admin'
 
@@ -20,6 +21,7 @@ export default function EntryEditor({
   onSave,
   onCancel
 }: EntryEditorProps) {
+  const navigate = useNavigate()
   const [rank, setRank] = useState(suggestedRank)
   const [title, setTitle] = useState('')
   const [blurb, setBlurb] = useState('')
@@ -206,7 +208,7 @@ export default function EntryEditor({
               </select>
               <button
                 type="button"
-                onClick={() => window.open(`${window.location.origin}/admin/dashboard?tab=media`, '_blank')}
+                onClick={() => navigate('/admin/dashboard?tab=media')}
                 className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 whitespace-nowrap"
               >
                 Upload New

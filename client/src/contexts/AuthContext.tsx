@@ -16,31 +16,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Check if user is already logged in on mount
     const credentials = localStorage.getItem('adminAuth')
     if (credentials) {
-      validateToken(credentials)
+      // Simply set authenticated if credentials exist
+      // The API interceptor will handle validation on actual requests
+      setIsAuthenticated(true)
     }
   }, [])
-
-  const validateToken = async (credentials: string) => {
-    try {
-      const response = await fetch('/api/admin/suggestions', {
-        headers: {
-          'Authorization': `Basic ${credentials}`
-        }
-      })
-      
-      if (response.ok) {
-        setIsAuthenticated(true)
-      } else {
-        // Invalid token, clear it
-        localStorage.removeItem('adminAuth')
-        setIsAuthenticated(false)
-      }
-    } catch (error) {
-      console.error('Token validation error:', error)
-      localStorage.removeItem('adminAuth')
-      setIsAuthenticated(false)
-    }
-  }
 
   const login = (credentials: string) => {
     localStorage.setItem('adminAuth', credentials)
