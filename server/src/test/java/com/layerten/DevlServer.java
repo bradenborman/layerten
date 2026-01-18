@@ -8,7 +8,7 @@ import org.springframework.boot.SpringApplication;
  * 
  * To run:
  * - In IntelliJ: Right-click this file and select "Run 'DevlServer.main()'"
- * - From command line: ./gradlew :server:bootRun --args='--spring.profiles.active=devl,local'
+ * - The profiles are automatically set in the code, no need to pass arguments
  */
 public class DevlServer {
     
