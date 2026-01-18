@@ -27,9 +27,9 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       // Clear auth token on 401
       localStorage.removeItem('adminAuth')
-      // Use absolute URL to ensure we go to the frontend, not the API
+      // Use current origin to work in both dev and production
       if (typeof window !== 'undefined') {
-        window.location.href = 'http://localhost:3000/admin/login'
+        window.location.href = `${window.location.origin}/admin/login`
       }
     }
     return Promise.reject(error)

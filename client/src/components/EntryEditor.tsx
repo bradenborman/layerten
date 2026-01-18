@@ -206,7 +206,7 @@ export default function EntryEditor({
               </select>
               <button
                 type="button"
-                onClick={() => window.open('http://localhost:3000/admin/dashboard?tab=media', '_blank')}
+                onClick={() => window.open(`${window.location.origin}/admin/dashboard?tab=media`, '_blank')}
                 className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 whitespace-nowrap"
               >
                 Upload New
