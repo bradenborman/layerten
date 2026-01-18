@@ -11,7 +11,7 @@ const api = axios.create({
 // Request interceptor for adding auth token
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('authToken')
+    const token = localStorage.getItem('adminAuth')
     if (token) {
       config.headers.Authorization = `Basic ${token}`
     }
@@ -26,7 +26,7 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       // Clear auth token on 401
-      localStorage.removeItem('authToken')
+      localStorage.removeItem('adminAuth')
       window.location.href = '/admin/login'
     }
     return Promise.reject(error)

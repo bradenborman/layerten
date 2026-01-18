@@ -35,6 +35,17 @@ public class AdminListController {
     }
     
     /**
+     * Get a ranked list by ID.
+     * 
+     * @param id the list ID
+     * @return the list details
+     */
+    @GetMapping("/{id}")
+    public RankedListDetailDTO getListById(@PathVariable Long id) {
+        return rankedListService.getListById(id);
+    }
+    
+    /**
      * Update an existing ranked list.
      * 
      * @param id the list ID

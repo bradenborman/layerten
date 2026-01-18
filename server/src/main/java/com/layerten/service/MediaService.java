@@ -78,6 +78,13 @@ public class MediaService {
     }
 
     @Transactional(readOnly = true)
+    public java.util.List<MediaAssetDTO> getAllMedia() {
+        return mediaAssetRepository.findAll().stream()
+                .map(this::toDTO)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
     public Path getMediaFile(Long id) {
         MediaAsset mediaAsset = mediaAssetRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Media asset not found with id: " + id));

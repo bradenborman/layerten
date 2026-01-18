@@ -71,6 +71,11 @@ export interface UpdateSuggestionStatusRequest {
 
 export const adminApi = {
   // Lists
+  getListById: async (id: number) => {
+    const response = await api.get<RankedListDetail>(`/admin/lists/${id}`)
+    return response.data
+  },
+
   createList: async (data: CreateListRequest) => {
     const response = await api.post<RankedListDetail>('/admin/lists', data)
     return response.data
@@ -110,6 +115,11 @@ export const adminApi = {
   },
 
   // Media
+  getAllMedia: async () => {
+    const response = await api.get<MediaAsset[]>('/admin/media')
+    return response.data
+  },
+
   uploadMedia: async (file: File, altText?: string) => {
     const formData = new FormData()
     formData.append('file', file)

@@ -68,6 +68,9 @@ public class RankedListService {
             request.outro()
         );
         
+        // Set published timestamp
+        rankedList.setPublishedAt(LocalDateTime.now());
+        
         // Set cover image if provided
         if (request.coverImageId() != null) {
             MediaAsset coverImage = mediaAssetRepository.findById(request.coverImageId())
@@ -175,6 +178,21 @@ public class RankedListService {
         RankedList rankedList = rankedListRepository.findBySlug(slug)
             .orElseThrow(() -> new EntityNotFoundException(
                 "Ranked list with slug '" + slug + "' not found"));
+        
+        return toDetailDTO(rankedList);
+    }
+    
+    /**
+     * Get a ranked list by ID with all entries.
+     * 
+     * @param id the ID of the list
+     * @return the list with entries as a DTO
+     */
+    @Transactional(readOnly = true)
+    public RankedListDetailDTO getListById(Long id) {
+        RankedList rankedList = rankedListRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException(
+                "Ranked list with ID " + id + " not found"));
         
         return toDetailDTO(rankedList);
     }

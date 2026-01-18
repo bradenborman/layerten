@@ -28,6 +28,16 @@ public class AdminMediaController {
     }
     
     /**
+     * Get all media assets.
+     * 
+     * @return list of all media assets
+     */
+    @GetMapping
+    public java.util.List<MediaAssetDTO> getAllMedia() {
+        return mediaService.getAllMedia();
+    }
+    
+    /**
      * Upload a new media file.
      * 
      * @param file the file to upload

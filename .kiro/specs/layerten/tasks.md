@@ -501,14 +501,14 @@ This implementation plan breaks down the LayerTen monorepo web application into 
     - Add edit/delete actions per row
     - _Requirements: 11.3_
   
-  - [ ] 22.3 Create ListEditor component
+  - [x] 22.3 Create ListEditor component
     - Form for list metadata (title, subtitle, intro, outro, tags, cover image)
     - Entry management section with add/edit/delete
     - Drag-and-drop reordering interface for entries
     - Bulk save button for rank updates
     - _Requirements: 11.4_
   
-  - [ ] 22.4 Create EntryEditor modal component
+  - [x] 22.4 Create EntryEditor modal component
     - Form for entry fields (rank, title, blurb, commentary, fun fact, external link, hero image)
     - Validation for required fields
     - _Requirements: 11.4_
@@ -519,20 +519,20 @@ This implementation plan breaks down the LayerTen monorepo web application into 
     - Test reordering entries
     - Test validation errors
 
-- [ ] 23. Implement admin dashboard - Posts and Suggestions
-  - [ ] 23.1 Create AdminPostsTab component
+- [x] 23. Implement admin dashboard - Posts and Suggestions
+  - [x] 23.1 Create AdminPostsTab component
     - Fetch and display all blog posts in a table with status badges
     - Add create new post button
     - Add edit/delete actions per row
     - _Requirements: 11.5_
   
-  - [ ] 23.2 Create PostEditor component
+  - [x] 23.2 Create PostEditor component
     - Form for post metadata (title, excerpt, tags, cover image, status)
     - Markdown editor with preview pane (use react-markdown-editor-lite or similar)
     - Save draft / Publish buttons
     - _Requirements: 11.5_
   
-  - [ ] 23.3 Create AdminSuggestionsTab component
+  - [x] 23.3 Create AdminSuggestionsTab component
     - Fetch and display all suggestions in a table
     - Add status filter dropdown
     - Display title, description, submitter info, created date
@@ -545,7 +545,7 @@ This implementation plan breaks down the LayerTen monorepo web application into 
     - Test markdown preview
 
 - [ ] 24. Implement admin dashboard - Media management
-  - [ ] 24.1 Create AdminMediaTab component
+  - [x] 24.1 Create AdminMediaTab component
     - Fetch and display all media assets in a grid with thumbnails
     - Add upload button with ImageUploader component
     - Display filename, size, upload date per media item

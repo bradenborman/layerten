@@ -1,84 +1,79 @@
 import { useEffect, useState } from 'react'
-import { useAuth } from '../contexts/AuthContext'
-import type { RankedListSummary } from '../services/lists'
-import ListEditor from './ListEditor'
+import api from '../services/api'
+import type { BlogPostSummary } from '../services/posts'
+import PostEditor from './PostEditor'
 
-export default function AdminListsTab() {
-  const { getAuthHeader } = useAuth()
-  const [lists, setLists] = useState<RankedListSummary[]>([])
+export default function AdminPostsTab() {
+  const [posts, setPosts] = useState<BlogPostSummary[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [showEditor, setShowEditor] = useState(false)
-  const [editingListId, setEditingListId] = useState<number | undefined>()
+  const [editingPostId, setEditingPostId] = useState<number | undefined>()
 
   useEffect(() => {
-    fetchLists()
+    fetchPosts()
   }, [])
 
-  const fetchLists = async () => {
+  const fetchPosts = async () => {
     try {
       setLoading(true)
-      const authHeader = getAuthHeader()
-      const response = await fetch('/api/lists', {
-        headers: authHeader ? { 'Authorization': authHeader } : {}
-      })
+      const response = await api.get('/posts')
       
-      if (response.ok) {
-        const data = await response.json()
-        setLists(data.content || [])
-      } else {
-        setError('Failed to fetch lists')
+      if (response.data) {
+        setPosts(response.data.content || [])
       }
     } catch (err) {
-      console.error('Error fetching lists:', err)
-      setError('An error occurred while fetching lists')
+      console.error('Error fetching posts:', err)
+      setError('An error occurred while fetching posts')
     } finally {
       setLoading(false)
     }
   }
 
   const handleDelete = async (id: number) => {
-    if (!confirm('Are you sure you want to delete this list?')) {
+    if (!confirm('Are you sure you want to delete this post?')) {
       return
     }
 
     try {
-      const authHeader = getAuthHeader()
-      const response = await fetch(`/api/admin/lists/${id}`, {
-        method: 'DELETE',
-        headers: authHeader ? { 'Authorization': authHeader } : {}
-      })
-
-      if (response.ok) {
-        setLists(lists.filter(list => list.id !== id))
-      } else {
-        alert('Failed to delete list')
-      }
+      await api.delete(`/admin/posts/${id}`)
+      setPosts(posts.filter(post => post.id !== id))
     } catch (err) {
-      console.error('Error deleting list:', err)
-      alert('An error occurred while deleting the list')
+      console.error('Error deleting post:', err)
+      alert('An error occurred while deleting the post')
     }
   }
 
   const handleCreateNew = () => {
-    setEditingListId(undefined)
+    setEditingPostId(undefined)
     setShowEditor(true)
   }
 
   const handleEdit = (id: number) => {
-    setEditingListId(id)
+    setEditingPostId(id)
     setShowEditor(true)
   }
 
   const handleEditorSave = () => {
     setShowEditor(false)
-    setEditingListId(undefined)
-    fetchLists()
+    setEditingPostId(undefined)
+    fetchPosts()
   }
 
   const handleEditorCancel = () => {
     setShowEditor(false)
-    setEditingListId(undefined)
+    setEditingPostId(undefined)
+  }
+
+  const getStatusBadgeClass = (status: string) => {
+    switch (status) {
+      case 'PUBLISHED':
+        return 'bg-green-100 text-green-800'
+      case 'DRAFT':
+        return 'bg-gray-100 text-gray-800'
+      default:
+        return 'bg-gray-100 text-gray-800'
+    }
   }
 
   if (loading) {
@@ -91,8 +86,8 @@ export default function AdminListsTab() {
 
   if (showEditor) {
     return (
-      <ListEditor
-        listId={editingListId}
+      <PostEditor
+        postId={editingPostId}
         onSave={handleEditorSave}
         onCancel={handleEditorCancel}
       />
@@ -102,18 +97,18 @@ export default function AdminListsTab() {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">Ranked Lists</h2>
+        <h2 className="text-2xl font-bold text-gray-900">Blog Posts</h2>
         <button
           onClick={handleCreateNew}
           className="btn btn-primary"
         >
-          Create New List
+          Create New Post
         </button>
       </div>
 
-      {lists.length === 0 ? (
+      {posts.length === 0 ? (
         <div className="text-center py-12 bg-white rounded-lg shadow">
-          <p className="text-gray-600">No lists found</p>
+          <p className="text-gray-600">No posts found</p>
         </div>
       ) : (
         <div className="bg-white rounded-lg shadow overflow-hidden">
@@ -124,7 +119,7 @@ export default function AdminListsTab() {
                   Title
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Entries
+                  Status
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Published
@@ -135,29 +130,29 @@ export default function AdminListsTab() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {lists.map(list => (
-                <tr key={list.id} className="hover:bg-gray-50">
+              {posts.map(post => (
+                <tr key={post.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4">
-                    <div className="text-sm font-medium text-gray-900">{list.title}</div>
-                    {list.subtitle && (
-                      <div className="text-sm text-gray-500">{list.subtitle}</div>
-                    )}
+                    <div className="text-sm font-medium text-gray-900">{post.title}</div>
+                    <div className="text-sm text-gray-500 truncate max-w-md">{post.excerpt}</div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusBadgeClass(post.status)}`}>
+                      {post.status}
+                    </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {list.entryCount}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {new Date(list.publishedAt).toLocaleDateString()}
+                    {post.publishedAt ? new Date(post.publishedAt).toLocaleDateString() : '-'}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <button
-                      onClick={() => handleEdit(list.id)}
+                      onClick={() => handleEdit(post.id)}
                       className="text-blue-600 hover:text-blue-900 mr-4"
                     >
                       Edit
                     </button>
                     <button
-                      onClick={() => handleDelete(list.id)}
+                      onClick={() => handleDelete(post.id)}
                       className="text-red-600 hover:text-red-900"
                     >
                       Delete
