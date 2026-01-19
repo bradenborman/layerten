@@ -295,6 +295,48 @@ public class RankedListService {
         return toEntryDTO(saved);
     }
     
+    /**
+     * Update an existing entry in a ranked list.
+     * 
+     * @param listId the ID of the list
+     * @param entryId the ID of the entry
+     * @param request the update entry request
+     * @return the updated entry as a DTO
+     */
+    public RankedEntryDTO updateEntry(Long listId, Long entryId, CreateEntryRequest request) {
+        RankedEntry entry = rankedEntryRepository.findById(entryId)
+            .orElseThrow(() -> new EntityNotFoundException(
+                "Entry with ID " + entryId + " not found"));
+        
+        // Verify the entry belongs to the specified list
+        if (!entry.getRankedList().getId().equals(listId)) {
+            throw new IllegalArgumentException(
+                "Entry " + entryId + " does not belong to list " + listId);
+        }
+        
+        // Update fields
+        entry.setRank(request.rank());
+        entry.setTitle(request.title());
+        entry.setBlurb(request.blurb());
+        entry.setCommentary(request.commentary());
+        entry.setFunFact(request.funFact());
+        entry.setExternalLink(request.externalLink());
+        
+        // Update hero image
+        if (request.heroImageId() != null) {
+            MediaAsset heroImage = mediaAssetRepository.findById(request.heroImageId())
+                .orElseThrow(() -> new EntityNotFoundException(
+                    "Media asset with ID " + request.heroImageId() + " not found"));
+            entry.setHeroImage(heroImage);
+        } else {
+            entry.setHeroImage(null);
+        }
+        
+        // Save and return
+        RankedEntry saved = rankedEntryRepository.save(entry);
+        return toEntryDTO(saved);
+    }
+    
     // Helper methods for DTO conversion
     
     private RankedListSummaryDTO toSummaryDTO(RankedList rankedList) {

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { adminApi } from '../services/admin'
 import type { RankedEntry, Tag, MediaAsset } from '../services/lists'
-import type { CreateListRequest, UpdateListRequest, CreateEntryRequest, EntryRankUpdate } from '../services/admin'
+import type { CreateListRequest, UpdateListRequest, CreateEntryRequest } from '../services/admin'
 import EntryEditor from './EntryEditor'
 import LoadingSpinner from './LoadingSpinner'
 
@@ -132,30 +132,34 @@ export default function ListEditor({ listId, onSave, onCancel }: ListEditorProps
       
       // Handle entries for the list
       if (savedListId) {
-        // Add new entries (those with temporary IDs > 1000000000000)
-        for (const entry of entries) {
-          if (entry.id > 1000000000000) {
-            await adminApi.addEntry(savedListId, {
-              rank: entry.rank,
-              title: entry.title,
-              blurb: entry.blurb,
-              commentary: entry.commentary,
-              funFact: entry.funFact,
-              externalLink: entry.externalLink,
-              heroImageId: entry.heroImage?.id
-            })
-          }
+        // Separate new entries from existing entries
+        const newEntries = entries.filter(e => e.id > 1000000000000)
+        const existingEntries = entries.filter(e => e.id <= 1000000000000)
+        
+        // Add new entries
+        for (const entry of newEntries) {
+          await adminApi.addEntry(savedListId, {
+            rank: entry.rank,
+            title: entry.title,
+            blurb: entry.blurb,
+            commentary: entry.commentary,
+            funFact: entry.funFact,
+            externalLink: entry.externalLink,
+            heroImageId: entry.heroImage?.id
+          })
         }
         
-        // Update entry ranks if changed (only for existing entries)
-        const existingEntries = entries.filter(e => e.id <= 1000000000000)
-        if (existingEntries.length > 0) {
-          const rankUpdates: EntryRankUpdate[] = existingEntries.map((entry, index) => ({
-            entryId: entry.id,
-            newRank: index + 1
-          }))
-          
-          await adminApi.reorderEntries(savedListId, rankUpdates)
+        // Update existing entries (to capture any field changes including heroImage)
+        for (const entry of existingEntries) {
+          await adminApi.updateEntry(savedListId, entry.id, {
+            rank: entry.rank,
+            title: entry.title,
+            blurb: entry.blurb,
+            commentary: entry.commentary,
+            funFact: entry.funFact,
+            externalLink: entry.externalLink,
+            heroImageId: entry.heroImage?.id
+          })
         }
       }
       

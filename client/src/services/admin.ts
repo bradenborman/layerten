@@ -95,6 +95,11 @@ export const adminApi = {
     return response.data
   },
 
+  updateEntry: async (listId: number, entryId: number, data: CreateEntryRequest) => {
+    const response = await api.put<RankedEntry>(`/admin/lists/${listId}/entries/${entryId}`, data)
+    return response.data
+  },
+
   reorderEntries: async (listId: number, updates: EntryRankUpdate[]) => {
     await api.put(`/admin/lists/${listId}/entries/reorder`, updates)
   },

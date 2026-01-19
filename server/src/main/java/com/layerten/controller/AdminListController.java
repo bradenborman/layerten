@@ -88,6 +88,23 @@ public class AdminListController {
     }
     
     /**
+     * Update an existing entry in a ranked list.
+     * 
+     * @param listId the list ID
+     * @param entryId the entry ID
+     * @param request the update entry request
+     * @return the updated entry
+     */
+    @PutMapping("/{listId}/entries/{entryId}")
+    public RankedEntryDTO updateEntry(
+        @PathVariable Long listId,
+        @PathVariable Long entryId,
+        @Valid @RequestBody CreateEntryRequest request
+    ) {
+        return rankedListService.updateEntry(listId, entryId, request);
+    }
+    
+    /**
      * Reorder entries in a ranked list.
      * 
      * @param id the list ID
